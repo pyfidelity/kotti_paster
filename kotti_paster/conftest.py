@@ -31,7 +31,7 @@ def pytest_funcarg__pasterdir(request):
         directory = tempfile.mkdtemp()
         os.chdir(directory)
         template_name, project_name, extra_parameters = request.keywords['paster'].args
-        params = [os.path.join(home, 'bin', 'paster'), 'create', '-t', template_name, project_name]
+        params = [os.path.join(home, 'bin', 'templer'), template_name, project_name]
         params.extend(extra_parameters.split(' '))
         subprocess.check_call(params)
         os.chdir(project_name)
@@ -69,6 +69,8 @@ programs =
     10 app %(cwd)s/bin/pserve [%(cwd)s/development.ini]
 """ % dict(cwd=cwd))
         cfg.close()
+        # TODO: make -No flag run time parameter
+        # subprocess.check_call([os.path.join(home, 'bin', 'buildout'), '-c', 'supervisor.cfg', '-No'])
         subprocess.check_call([os.path.join(home, 'bin', 'buildout'), '-c', 'supervisor.cfg'])
         up('app')
         waitforports(6543)
@@ -105,6 +107,8 @@ eggs =
     pytest
         """ % project)
         cfg.close()
+        # TODO: make -No flag run time parameter
+        # subprocess.check_call([os.path.join(home, 'bin', 'buildout'), '-c', 'testing.cfg', '-No'])
         subprocess.check_call([os.path.join(home, 'bin', 'buildout'), '-c', 'testing.cfg'])
         # run the tests:
         return subprocess.Popen([os.path.join(cwd, 'bin', 'test')],

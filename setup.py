@@ -38,6 +38,10 @@ setup(name='kotti_paster',
         kotti_addon = kotti_paster.paster_templates:Addon
         kotti_project = kotti_paster.paster_templates:Buildout
 
+        [templer.templer_structure]
+        content_type = kotti_paster.paster_templates:ContentType
+        gitignore = kotti_paster.paster_templates:Git
+        travis = kotti_paster.paster_templates:Travis
     """,
     extras_require={
         'testing': tests_require,
